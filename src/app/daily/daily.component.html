@@ -1,6 +1,10 @@
 <br/>
 <label>
 Number of Digits:
-<input type="text" maxlength="2" size="2" [formControl]="numberOfDigits">
+<input id="numdigits" type="text" maxlength="1" size="1" [formControl]="numberOfDigits">
 </label>
-<span class="actionBtn"><button type="button" class="btn btn-primary btn-sm">Generate Number</button></span>
+<span class="actionBtn">
+  <button type="button" (click)="generateLottoNumbers(numberOfDigits.value)" class="btn btn-primary btn-sm">Generate Number</button>
+</span>
+
+<app-dailyresults [LuckyNumber]="lottoNums"></app-dailyresults>

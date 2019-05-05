@@ -8,11 +8,26 @@ import { FormControl } from '@angular/forms';
 })
 export class DailyComponent implements OnInit {
 
+  lottoNums = '';
+
   numberOfDigits = new FormControl('4');
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  generateLottoNumbers(numDigits: number) {
+
+    const nums: number[] = [];
+
+    this.lottoNums = '';
+
+    for ( let i = 0; i < numDigits; i++) {
+      nums[i] = Math.floor(Math.random() * 10);
+      this.lottoNums += `${nums[i]}`;
+    }
+
   }
 
 }
