@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-daily',
@@ -20,6 +21,7 @@ export class DailyComponent implements OnInit {
   generateLottoNumbers(numDigits: number) {
 
     const nums: number[] = [];
+    // console.log(moment().format('MMM Do YY'));
 
     this.lottoNums = '';
 
