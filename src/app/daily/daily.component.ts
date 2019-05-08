@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-daily',
@@ -11,19 +12,30 @@ export class DailyComponent implements OnInit {
 
   lottoNums = '';
 
-  numberOfDigits = new FormControl('4');
+  numberOfDigits: string[] = ['1', '2', '3', '4'];
+  selectedDigits = 'Number of Digits';
 
-  constructor() { }
+  model: NgbDateStruct;
+  date: {year: number, month: number};
 
-  ngOnInit() {
+  constructor(private calendar: NgbCalendar) {
   }
 
-  generateLottoNumbers(numDigits: number) {
+  selectToday() {
+    this.model = this.calendar.getToday();
+  }
 
+  ngOnInit() {
+    this.selectToday();
+  }
+
+  generateLottoNumbers(nDigits: string) {
+
+    const numDigits = parseInt(nDigits, 10);
     const nums: number[] = [];
     // console.log(moment().format('MMM Do YY'));
 
-    this.lottoNums = '';
+    this.lottoNums = ''; 
 
     for ( let i = 0; i < numDigits; i++) {
       nums[i] = Math.floor(Math.random() * 10);

@@ -1,10 +1,19 @@
 <br/>
-<label>
-Number of Digits:
-<input id="numdigits" type="text" maxlength="1" size="1" [formControl]="numberOfDigits">
-</label>
-<span class="actionBtn">
-  <button type="button" (click)="generateLottoNumbers(numberOfDigits.value)" class="btn btn-primary btn-sm">Generate Number</button>
-</span>
-
+<div class="row">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-primary" id="dropNumofBalls" ngbDropdownToggle>{{ selectedDigits }}</button>
+        <div ngbDropdownMenu aria-labelledby="dropNumofBalls">
+            <button class="dropdown-item" *ngFor="let num of numberOfDigits" (click)="generateLottoNumbers(num)" >{{num}}</button>
+        </div>
+    </div>
+    <span class="picker">
+      <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker>
+    </span>
+    <span class="picker">
+        <button class="btn btn-primary" id="generate" 
+          (click)="generateLottoNumbers(4)">Play Lotto until date selected!</button>
+    </span>
+  </div>
+</div>
 <app-dailyresults [LuckyNumber]="lottoNums"></app-dailyresults>
