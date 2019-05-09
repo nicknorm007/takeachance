@@ -10,10 +10,11 @@ import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DailyComponent implements OnInit {
 
-  lottoNums = '';
+  lottoNums = '----';
 
   numberOfDigits: string[] = ['1', '2', '3', '4'];
   selectedDigits = 'Number of Digits';
+  selection = '';
 
   model: NgbDateStruct;
   date: {year: number, month: number};
@@ -35,11 +36,15 @@ export class DailyComponent implements OnInit {
     const nums: number[] = [];
     // console.log(moment().format('MMM Do YY'));
 
-    this.lottoNums = ''; 
+    this.lottoNums = '';
 
     for ( let i = 0; i < numDigits; i++) {
       nums[i] = Math.floor(Math.random() * 10);
       this.lottoNums += `${nums[i]}`;
+    }
+
+    for ( let i = 0; i < this.numberOfDigits.length - numDigits; i++) {
+      this.lottoNums += '-';
     }
 
   }

@@ -4,3 +4,15 @@ table {
 #results {
     padding-top: 25px;
 }
+.flex-container {
+    display: flex;
+    background-color: hsl(198, 100%, 82%);
+    width: 25%;
+}
+  
+.flex-container > div {
+    background-color: #f1f1f1;
+    margin: 7px;
+    padding: 20px;
+    font-size: 30px;
+}

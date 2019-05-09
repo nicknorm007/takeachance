@@ -7,7 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DailyresultsComponent implements OnInit {
 
-  @Input() LuckyNumber: string;
+  @Input() luckyNumber: string;
+  @Input() numSelected: string;
 
   constructor() { }
 

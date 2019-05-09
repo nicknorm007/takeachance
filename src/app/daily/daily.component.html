@@ -4,7 +4,7 @@
     <div ngbDropdown class="d-inline-block">
       <button class="btn btn-outline-primary" id="dropNumofBalls" ngbDropdownToggle>{{ selectedDigits }}</button>
         <div ngbDropdownMenu aria-labelledby="dropNumofBalls">
-            <button class="dropdown-item" *ngFor="let num of numberOfDigits" (click)="generateLottoNumbers(num)" >{{num}}</button>
+            <button class="dropdown-item" *ngFor="let num of numberOfDigits" (click)="selection = num" >{{num}}</button>
         </div>
     </div>
     <span class="picker">
@@ -12,8 +12,10 @@
     </span>
     <span class="picker">
         <button class="btn btn-primary" id="generate" 
-          (click)="generateLottoNumbers(4)">Play Lotto until date selected!</button>
+          (click)="generateLottoNumbers(selection)" 
+          [disabled]="!selection.length">Play Lotto DAILY until date selected!
+        </button>
     </span>
   </div>
 </div>
-<app-dailyresults [LuckyNumber]="lottoNums"></app-dailyresults>
+<app-dailyresults [luckyNumber]="lottoNums" [numSelected]="selection"></app-dailyresults>
