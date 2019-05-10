@@ -10,12 +10,15 @@
     <span class="picker">
       <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker>
     </span>
-    <span class="picker">
-        <button class="btn btn-primary" id="generate" 
-          (click)="generateLottoNumbers(selection)" 
-          [disabled]="!selection.length">Play Lotto DAILY until date selected!
-        </button>
-    </span>
+    <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" [disabled]="!selection.length" id="methodPlay" 
+          ngbDropdownToggle>Select Play style!</button>
+          <div ngbDropdownMenu aria-labelledby="methodPlay">
+              <button class="dropdown-item" (click)="generateLottoNumbers(selection)">
+                Play Lotto DAILY until date selected!</button>
+              <button class="dropdown-item" (click)="generateLottoNumbers(selection)">Play until hit!</button>
+          </div>
+    </div>
   </div>
 </div>
-<app-dailyresults [luckyNumber]="lottoNums" [numSelected]="selection"></app-dailyresults>
+<app-dailyresults [luckyNumber]="lottoNums" [numSelected]="selection" [dateSelected]="model"></app-dailyresults>
