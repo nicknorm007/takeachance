@@ -10,11 +10,18 @@ import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DailyComponent implements OnInit {
 
+  playStyle = {
+    UNTIL: 'until',
+    FOREVER: 'forever'
+  };
+
   lottoNums = '----';
 
   numberOfDigits: string[] = ['1', '2', '3', '4'];
   selectedDigits = 'Number of Digits';
-  selection = '';
+  selection = '4';
+  playStyleSelection = '';
+  numberOfDaysToPlay = '1';
 
   model: NgbDateStruct;
   date: {year: number, month: number};
@@ -30,23 +37,52 @@ export class DailyComponent implements OnInit {
     this.selectToday();
   }
 
-  generateLottoNumbers(nDigits: string) {
+  generateLottoNumbers(nDigits: string, playstyle: string) {
 
     const numDigits = parseInt(nDigits, 10);
     const nums: number[] = [];
-    // console.log(moment().format('MMM Do YY'));
-
+    this.playStyleSelection = playstyle;
     this.lottoNums = '';
 
     for ( let i = 0; i < numDigits; i++) {
       nums[i] = Math.floor(Math.random() * 10);
       this.lottoNums += `${nums[i]}`;
     }
+    this.addDashesToRemaining(numDigits);
+  }
 
-    for ( let i = 0; i < this.numberOfDigits.length - numDigits; i++) {
+  private addDashesToRemaining(numDigits: number) {
+    for (let i = 0; i < this.numberOfDigits.length - numDigits; i++) {
       this.lottoNums += '-';
     }
+  }
+
+  playLottoNumbersGame(nDigits: string, playstyle: string) {
+
+    this.determineNumberOfDaysToPlay();
+    this.generateLottoNumbers(nDigits, playstyle);
 
   }
 
+  determineNumberOfDaysToPlay() {
+
+    const dateStr = this.buildDateStringFromModel();
+    const todayStr = this.buildTodayDateString();
+    const start = moment(todayStr, 'YYYY-MM-DD');
+    const end = moment(dateStr, 'YYYY-MM-DD');
+
+    // Difference in number of days
+    const diffDays = moment.duration(end.diff(start)).asDays();
+
+    // const fromNow = moment(dateStr, 'YYYYMMDD').fromNow();
+    this.numberOfDaysToPlay = `${diffDays.toFixed(0)}`;
+  }
+
+  buildDateStringFromModel(): string {
+    return `${this.model.year}-${this.model.month}-${this.model.day}`;
+  }
+
+  buildTodayDateString(): string {
+    return `${this.calendar.getToday().year}-${this.calendar.getToday().month}-${this.calendar.getToday().day}`;
+  }
 }

@@ -9,6 +9,7 @@ export class DailyresultsComponent implements OnInit {
 
   @Input() luckyNumber: string;
   @Input() numSelected: string;
+  @Input() daysToPlay: string;
   @Input() dateSelected: Object;
 
   constructor() { }

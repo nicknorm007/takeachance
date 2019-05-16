@@ -4,21 +4,30 @@
     <div ngbDropdown class="d-inline-block">
       <button class="btn btn-outline-primary" id="dropNumofBalls" ngbDropdownToggle>{{ selectedDigits }}</button>
         <div ngbDropdownMenu aria-labelledby="dropNumofBalls">
-            <button class="dropdown-item" *ngFor="let num of numberOfDigits" (click)="selection = num" >{{num}}</button>
+          <button class="dropdown-item" *ngFor="let num of numberOfDigits" (click)="selection = num" >{{num}}</button>
         </div>
+        <span class ="infos">
+            <span class="badge badge-pill badge-info">Digits: {{ selection }}</span>
+        </span>
     </div>
     <span class="picker">
       <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker>
     </span>
     <div ngbDropdown class="d-inline-block">
         <button class="btn btn-outline-primary" [disabled]="!selection.length" id="methodPlay" 
-          ngbDropdownToggle>Select Play style!</button>
+          ngbDropdownToggle>Select Play Style!</button>
           <div ngbDropdownMenu aria-labelledby="methodPlay">
-              <button class="dropdown-item" (click)="generateLottoNumbers(selection)">
+              <button class="dropdown-item" (click)="playLottoNumbersGame(selection, playStyle.UNTIL)">
                 Play Lotto DAILY until date selected!</button>
-              <button class="dropdown-item" (click)="generateLottoNumbers(selection)">Play until hit!</button>
+              <button class="dropdown-item" (click)="playLottoNumbersGame(selection, playStyle.FOREVER)">
+                Play until hit!</button>
           </div>
     </div>
   </div>
 </div>
-<app-dailyresults [luckyNumber]="lottoNums" [numSelected]="selection" [dateSelected]="model"></app-dailyresults>
+<app-dailyresults 
+[luckyNumber]="lottoNums" 
+[numSelected]="selection" 
+[dateSelected]="model" 
+[daysToPlay]="numberOfDaysToPlay">
+</app-dailyresults>
