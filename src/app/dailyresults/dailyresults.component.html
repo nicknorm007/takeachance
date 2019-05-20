@@ -1,20 +1,20 @@
 <div id="results">
   <div class="flex-container">
-    <div>{{ luckyNumber.charAt(0) }}</div>
-    <div>{{ luckyNumber.charAt(1) }}</div>
-    <div>{{ luckyNumber.charAt(2) }}</div>
-    <div>{{ luckyNumber.charAt(3) }}</div>  
+    <div>{{ currentNumber.charAt(0) }}</div>
+    <div>{{ currentNumber.charAt(1) }}</div>
+    <div>{{ currentNumber.charAt(2) }}</div>
+    <div>{{ currentNumber.charAt(3) }}</div>  
   </div>
   <br/>
   <table class="table table-striped table-bordered">
     <tbody>
       <tr>
         <th scope="row">Lucky Number</th>
-        <td>{{ luckyNumber }}</td>
+        <td class="table-primary">{{ luckyNumber }}</td>
       </tr>
       <tr>
         <th scope="row">Number of Digits</th>
-        <td>{{ numSelected }}</td>
+        <td class="table-warning">{{ numSelected }}</td>
         </tr>
       <tr>
         <th scope="row">Number of Plays</th>

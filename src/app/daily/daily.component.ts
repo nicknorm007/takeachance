@@ -16,7 +16,7 @@ export class DailyComponent implements OnInit {
   };
 
   lottoNums = '----';
-
+  currentNum = '----';
   numberOfDigits: string[] = ['1', '2', '3', '4'];
   selectedDigits = 'Number of Digits';
   selection = '4';
@@ -44,11 +44,15 @@ export class DailyComponent implements OnInit {
     this.playStyleSelection = playstyle;
     this.lottoNums = '';
 
-    for ( let i = 0; i < numDigits; i++) {
+    this.pickNumbers(numDigits, nums);
+    this.addDashesToRemaining(numDigits);
+  }
+
+  private pickNumbers(numDigits: number, nums: number[]) {
+    for (let i = 0; i < numDigits; i++) {
       nums[i] = Math.floor(Math.random() * 10);
       this.lottoNums += `${nums[i]}`;
     }
-    this.addDashesToRemaining(numDigits);
   }
 
   private addDashesToRemaining(numDigits: number) {
@@ -61,7 +65,15 @@ export class DailyComponent implements OnInit {
 
     this.determineNumberOfDaysToPlay();
     this.generateLottoNumbers(nDigits, playstyle);
+    this.tryToFindMatch();
 
+  }
+  tryToFindMatch() {
+    const days: number = parseInt(this.numberOfDaysToPlay, 10);
+
+    for (let i = 0; i < days; i++) {
+
+    }
   }
 
   determineNumberOfDaysToPlay() {
@@ -73,8 +85,6 @@ export class DailyComponent implements OnInit {
 
     // Difference in number of days
     const diffDays = moment.duration(end.diff(start)).asDays();
-
-    // const fromNow = moment(dateStr, 'YYYYMMDD').fromNow();
     this.numberOfDaysToPlay = `${diffDays.toFixed(0)}`;
   }
 
