@@ -15,13 +15,16 @@ export class DailyComponent implements OnInit {
     FOREVER: 'forever'
   };
 
+  playingStyleSelection = '';
   lottoNums = '----';
   currentNum = '----';
+  currentLength = 4;
   numberOfDigits: string[] = ['1', '2', '3', '4'];
   selectedDigits = 'Number of Digits';
   selection = '4';
   playStyleSelection = '';
   numberOfDaysToPlay = '1';
+  gotMatch = false;
 
   model: NgbDateStruct;
   date: {year: number, month: number};
@@ -40,29 +43,51 @@ export class DailyComponent implements OnInit {
   generateLottoNumbers(nDigits: string, playstyle: string) {
 
     const numDigits = parseInt(nDigits, 10);
-    const nums: number[] = [];
     this.playStyleSelection = playstyle;
     this.lottoNums = '';
 
-    this.pickNumbers(numDigits, nums);
+    this.pickNumbers(numDigits);
     this.addDashesToRemaining(numDigits);
   }
 
-  private pickNumbers(numDigits: number, nums: number[]) {
+  private pickNumbers(numDigits: number, tryingMatch: boolean = false) {
+    const nums: number[] = [];
     for (let i = 0; i < numDigits; i++) {
       nums[i] = Math.floor(Math.random() * 10);
-      this.lottoNums += `${nums[i]}`;
+      if (!tryingMatch) {
+        this.lottoNums += `${nums[i]}`;
+      } else {
+        this.currentNum += `${nums[i]}`;
+      }
+
     }
   }
 
-  private addDashesToRemaining(numDigits: number) {
+  private addDashesToRemaining(numDigits: number, tryingMatch: boolean = false) {
     for (let i = 0; i < this.numberOfDigits.length - numDigits; i++) {
-      this.lottoNums += '-';
+      if (!tryingMatch) {
+        this.lottoNums += '-';
+      } else {
+        this.currentNum += '-';
+      }
     }
+  }
+
+  private checkForMatch(dayNumber: number) {
+
+    if (this.currentNum === this.lottoNums) {
+
+      alert('Lucky number was hit!');
+      this.gotMatch = true;
+    }
+
   }
 
   playLottoNumbersGame(nDigits: string, playstyle: string) {
 
+    // tslint:disable-next-line:radix
+    this.currentLength = parseInt(nDigits);
+    this.playingStyleSelection = playstyle;
     this.determineNumberOfDaysToPlay();
     this.generateLottoNumbers(nDigits, playstyle);
     this.tryToFindMatch();
@@ -70,9 +95,14 @@ export class DailyComponent implements OnInit {
   }
   tryToFindMatch() {
     const days: number = parseInt(this.numberOfDaysToPlay, 10);
-
     for (let i = 0; i < days; i++) {
-
+      if ( this.gotMatch ) {
+        break;
+      }
+      this.currentNum = '';
+      this.pickNumbers(this.currentLength, true);
+      this.addDashesToRemaining(this.currentLength, true);
+      this.checkForMatch(i);
     }
   }
 
