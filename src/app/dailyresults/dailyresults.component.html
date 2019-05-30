@@ -1,17 +1,13 @@
 <div id="results">
   <div class="flex-container">
-    <div>{{ currentNumber.charAt(0) }}</div>
-    <div>{{ currentNumber.charAt(1) }}</div>
-    <div>{{ currentNumber.charAt(2) }}</div>
-    <div>{{ currentNumber.charAt(3) }}</div>  
+    <div>{{ luckyNumber.charAt(0) }}</div>
+    <div>{{ luckyNumber.charAt(1) }}</div>
+    <div>{{ luckyNumber.charAt(2) }}</div>
+    <div>{{ luckyNumber.charAt(3) }}</div>  
   </div>
   <br/>
   <table class="table table-striped table-bordered">
     <tbody>
-      <tr>
-        <th scope="row">Lucky Number</th>
-        <td class="table-primary">{{ luckyNumber }}</td>
-      </tr>
       <tr>
         <th scope="row">Number of Digits</th>
         <td class="table-warning">{{ numSelected }}</td>
@@ -22,11 +18,14 @@
       </tr>
       <tr>
         <th scope="row">Days until hit</th>
-        <td></td>
+        <td [ngClass]="{
+          'result-square': foundMatch,
+          'failed-square': !foundMatch
+        }">{{ dayNumberHit }}</td>
       </tr>
       <tr>
         <th scope="row">Date you hit assuming one play per day</th>
-        <td>{{ dateSelected.month + "/" + dateSelected.day + "/" + dateSelected.year }}</td>
+        <td>{{ dateHit }}</td>
       </tr>
     </tbody>
   </table>

@@ -15,6 +15,7 @@ export class DailyComponent implements OnInit {
     FOREVER: 'forever'
   };
 
+  // game vars
   playingStyleSelection = '';
   lottoNums = '----';
   currentNum = '----';
@@ -25,6 +26,8 @@ export class DailyComponent implements OnInit {
   playStyleSelection = '';
   numberOfDaysToPlay = '1';
   gotMatch = false;
+  dayNumberHit = '0';
+  dateHit = '';
 
   model: NgbDateStruct;
   date: {year: number, month: number};
@@ -77,14 +80,17 @@ export class DailyComponent implements OnInit {
 
     if (this.currentNum === this.lottoNums) {
 
-      alert('Lucky number was hit!');
+      this.dayNumberHit = '' + dayNumber;
       this.gotMatch = true;
+      this.calculateFutureDateHit(dayNumber);
     }
 
   }
 
   playLottoNumbersGame(nDigits: string, playstyle: string) {
 
+    this.dayNumberHit = '0';
+    this.gotMatch = false;
     // tslint:disable-next-line:radix
     this.currentLength = parseInt(nDigits);
     this.playingStyleSelection = playstyle;
@@ -94,7 +100,9 @@ export class DailyComponent implements OnInit {
 
   }
   tryToFindMatch() {
-    const days: number = parseInt(this.numberOfDaysToPlay, 10);
+    const forever =  Number.MAX_SAFE_INTEGER;
+    const days: number = ( this.playingStyleSelection === this.playStyle.FOREVER ) ?
+      forever : parseInt(this.numberOfDaysToPlay, 10);
     for (let i = 0; i < days; i++) {
       if ( this.gotMatch ) {
         break;
@@ -104,6 +112,14 @@ export class DailyComponent implements OnInit {
       this.addDashesToRemaining(this.currentLength, true);
       this.checkForMatch(i);
     }
+  }
+
+  calculateFutureDateHit(days: number) {
+
+    const todayStr = this.buildTodayDateString();
+    const diff = moment(todayStr, 'YYYY-MM-DD').add(days, 'days');
+    this.dateHit = diff.format('MM/DD/YYYY');
+
   }
 
   determineNumberOfDaysToPlay() {

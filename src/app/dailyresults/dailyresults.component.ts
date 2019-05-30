@@ -12,6 +12,10 @@ export class DailyresultsComponent implements OnInit {
   @Input() daysToPlay: string;
   @Input() dateSelected: Object;
   @Input() currentNumber: string;
+  @Input() foundMatch: boolean;
+  @Input() dayNumberHit: string;
+  @Input() dateHit: string;
+
 
   constructor() { }
 
